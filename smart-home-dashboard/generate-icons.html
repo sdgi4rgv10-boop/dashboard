@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Icon Generator</title>
+</head>
+
+<body>
+    <canvas id="c192" width="192" height="192"></canvas>
+    <canvas id="c512" width="512" height="512"></canvas>
+    <a id="dl192" download="icon-192.png">تحميل 192</a><br>
+    <a id="dl512" download="icon-512.png">تحميل 512</a>
+    <script>
+        function drawIcon(canvas) {
+            const s = canvas.width;
+            const ctx = canvas.getContext('2d');
+            const r = s * 0.1; // corner radius for visual reference
+
+            // Background
+            ctx.fillStyle = '#0a0a0c';
+            ctx.fillRect(0, 0, s, s);
+
+            // Outer glow circle
+            const grd = ctx.createRadialGradient(s / 2, s / 2, s * 0.1, s / 2, s / 2, s * 0.48);
+            grd.addColorStop(0, 'rgba(255,215,0,0.18)');
+            grd.addColorStop(1, 'rgba(255,215,0,0)');
+            ctx.fillStyle = grd;
+            ctx.fillRect(0, 0, s, s);
+
+            // Gold circle
+            const goldGrd = ctx.createLinearGradient(s * 0.2, s * 0.2, s * 0.8, s * 0.8);
+            goldGrd.addColorStop(0, '#FFE066');
+            goldGrd.addColorStop(0.5, '#FFD700');
+            goldGrd.addColorStop(1, '#E6A800');
+            ctx.beginPath();
+            ctx.arc(s / 2, s / 2, s * 0.38, 0, Math.PI * 2);
+            ctx.fillStyle = goldGrd;
+            ctx.fill();
+
+            // Inner shine
+            const shine = ctx.createRadialGradient(s * 0.38, s * 0.36, s * 0.02, s / 2, s / 2, s * 0.38);
+            shine.addColorStop(0, 'rgba(255,255,255,0.35)');
+            shine.addColorStop(1, 'rgba(0,0,0,0.0)');
+            ctx.beginPath();
+            ctx.arc(s / 2, s / 2, s * 0.38, 0, Math.PI * 2);
+            ctx.fillStyle = shine;
+            ctx.fill();
+
+            // ZG text
+            ctx.fillStyle = '#000';
+            ctx.font = `900 ${s * 0.28}px "Arial Black", Arial, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('ZG', s / 2, s / 2 + s * 0.02);
+        }
+
+        const c192 = document.getElementById('c192');
+        const c512 = document.getElementById('c512');
+        drawIcon(c192);
+        drawIcon(c512);
+
+        document.getElementById('dl192').href = c192.toDataURL('image/png');
+        document.getElementById('dl512').href = c512.toDataURL('image/png');
+    </script>
+</body>
+
+</html>
